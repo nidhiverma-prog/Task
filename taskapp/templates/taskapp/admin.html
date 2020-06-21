@@ -1,0 +1,75 @@
+{% load static %}
+<body>
+  <style>
+   .navbar {
+  width: 100%;
+  background-color:white ;
+  overflow: auto;
+}
+
+/* Navbar links */         
+.navbar a {
+  float: left;
+  text-align: center;
+  padding: 12px;
+  color:black;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Navbar links on mouse-over */
+.navbar a:hover {
+  background-color:white;
+}
+
+/* Current/active navbar link */
+.active {
+  background-color: #4CAF50;
+}
+
+/* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+  .navbar input[type=text] {
+  float: right;
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+}
+                                                                                                  
+}
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <div class="navbar" >
+    {% if request.user.is_authenticated %}
+    <h2>You are Logged in as {{ request.user.username}}</h2>
+    <nav>
+         <form class="logout-link" action="/taskapp/logout/" method="post">
+         {% csrf_token %}
+         <button type="submit"><i class="fa fa-fw fa-unlock"></i>Logout</button>
+         <h2>The list of Admins are </h2>
+
+         {% for a in admin_name %}
+            {{ a.name}}<br>
+         {% endfor %}
+
+
+         </form>
+    </nav>
+   {% else %}
+   <a href="/taskapp/login" style="color:black"><i class="fa fa-fw fa-lock"></i> Login</a>
+    <a href="/taskapp/register" style="color:black" ><i class="fa fa-fw fa-user"></i> Register</a>
+    
+
+  {% endif %}
+    
+</div>
+
+</body>
+</html>
